@@ -6,8 +6,6 @@ import { ImArrowUpRight2 } from 'react-icons/im';
 import { useEffect } from 'react';
 
 export default function Home() {
-  // useEffect(() => {}, []);
-
   return (
     <Styled.Container>
       <Head>

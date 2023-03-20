@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { ArConnect } from 'permawebjs/auth';
 import { getBalance } from 'permawebjs/wallet';
 import { TbLogout } from 'react-icons/tb';
@@ -44,16 +45,17 @@ export async function getServerSideProps() {
 }
 
 export default function Dashboard(data: AllUsersProps) {
+  const router = useRouter();
   const [walletBalance, setWalletBalance] = useState(0);
   const [currentAddress, setCurrentAddress] = useState('');
-  const [allExpenses, setAllExpenses] = useState([]);
-  const [user, setUser] = useState({
-    fullName: '',
-    userName: '',
-    email: '',
-    walletAddress: '',
-    onboarded: true,
-  });
+
+  const { users } = data.data;
+  const user: UserProps =
+    currentAddress &&
+    users.find((user) => user.walletAddress === currentAddress);
+
+  const allExpenses = user && user.expenses;
+  const expenseCards = allExpenses && allExpenses.slice(0, 5);
 
   useEffect(() => {
     async function getAddress() {
@@ -65,21 +67,6 @@ export default function Dashboard(data: AllUsersProps) {
       });
 
       setWalletBalance(Number(balance));
-
-      const { users } = data.data;
-
-      const currentUser: UserProps = users.find(
-        (user) => user.walletAddress === address
-      );
-      setUser({
-        ...user,
-        fullName: currentUser.fullName,
-        userName: currentUser.userName,
-        email: currentUser.email,
-      });
-
-      const allExpenses = currentUser.expenses;
-      setAllExpenses([...allExpenses]);
     }
 
     getAddress();
@@ -94,9 +81,8 @@ export default function Dashboard(data: AllUsersProps) {
 
   const handleLogout = async () => {
     await ArConnect.disconnect();
+    router.push('/');
   };
-
-  const expenseCards = allExpenses.splice(0, 5);
 
   return (
     <Styled.Main>
@@ -120,7 +106,7 @@ export default function Dashboard(data: AllUsersProps) {
           <Styled.Logout>
             <Styled.User>
               <div></div>
-              <p>{user.fullName}</p>
+              <p>{user && user.fullName}</p>
             </Styled.User>
 
             <Styled.LogoutButton onClick={handleLogout}>
@@ -132,7 +118,7 @@ export default function Dashboard(data: AllUsersProps) {
 
         <Styled.Dashboard>
           <div className='transfer-ar'>
-            <h2>HELLO {user.fullName.split(' ')[0].toUpperCase()}!</h2>
+            <h2>HELLO {user && user.fullName.split(' ')[0].toUpperCase()}!</h2>
             <Styled.TransferButton disabled={true}>
               Transfer AR
             </Styled.TransferButton>
@@ -166,14 +152,15 @@ export default function Dashboard(data: AllUsersProps) {
               <Container>
                 <h3>EXPENSE HISTORY</h3>
 
-                {expenseCards.map((card: ExpenseProps, index) => (
-                  <CardContainer key={index}>
-                    <p>{card.name}</p>
-                    <p className='category'>{card.category}</p>
-                    <p>{card.date}</p>
-                    <p>{card.amount} AR</p>
-                  </CardContainer>
-                ))}
+                {expenseCards &&
+                  expenseCards.map((card: ExpenseProps, index) => (
+                    <CardContainer key={index}>
+                      <p>{card.name}</p>
+                      <p className='category'>{card.category}</p>
+                      <p>{card.date}</p>
+                      <p>{card.amount} AR</p>
+                    </CardContainer>
+                  ))}
 
                 <div></div>
               </Container>

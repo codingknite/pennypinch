@@ -168,11 +168,3 @@ export default function Onboarding(data: UsersProps) {
     </Styled.Main>
   );
 }
-
-/***
- *
- * situations
- *
- * 1. user comes to onboarding page but wallet is not installed
- * 2. user comes to onboarding page, wallet is installed but not connected
- */
