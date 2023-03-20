@@ -1,21 +1,29 @@
 {
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "deploy": "node utils/deploy.js",
+    "test:exm": "jest --config jestconfig.json"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
     "next": "latest",
+    "permawebjs": "^1.0.53",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
+    "@types/jest": "^29.4.4",
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",
     "@types/styled-components": "^5.1.25",
+    "ts-jest": "^29.0.5",
     "typescript": "^4.7.4"
   }
 }

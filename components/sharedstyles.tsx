@@ -1,54 +1,88 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-const Container = styled.div`
-  padding: 0 0.5rem;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  min-height: 100vh;
-`
-const Main = styled.main`
-  padding: 5rem 0;
-  flex: 1;
+export const Container = styled.div`
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
+  background: rgb(4, 5, 6);
+  background: linear-gradient(
+    318deg,
+    rgba(4, 5, 6, 1) 44%,
+    rgba(29, 30, 44, 1) 83%
+  );
 
-const Title = styled.h1`
-  margin: 0;
-  line-height: 1.15;
-  font-size: 4rem;
-  text-align: center;
-  text-decoration: none;
+  height: 100vh;
+`;
 
-  a {
-    color: ${({ theme }) => theme.colors.secondary};
-    text-decoration: none;
-    &:hover,
-    :focus,
-    :active {
-      text-decoration: underline;
+export const Main = styled.main`
+  background: url('/globe.svg');
+  background-position: bottom;
+  background-repeat: no-repeat;
+  height: 800px;
+  width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .text-wrapper {
+    height: 65%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    h1 {
+      color: #fff;
+      font-size: 5rem;
+      text-align: center;
+
+      .break-text {
+        display: block;
+      }
+    }
+
+    p {
+      color: #fff;
     }
   }
-`
 
-const Description = styled.p`
-  text-align: center;
-  line-height: 1.5;
-  font-size: 1.5rem;
-`
-const CodeTag = styled.code`
-  background: #fafafa;
-  border-radius: 5px;
-  margin: 0 0.75rem;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
-`
+  .globe {
+    height: 35%;
+  }
+`;
 
-export { Container, Main, Title, Description, CodeTag }
+export const Button = styled.button`
+  border: none;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  transition: ease-in-out 300ms;
+
+  &:hover {
+    background-color: #f3ec78;
+    background-image: linear-gradient(45deg, #f3ec78, #af4261);
+    transform: scale(1.05);
+  }
+`;
+
+export const GradientOverlay = styled.span`
+  background-color: #f3ec78;
+  background-image: linear-gradient(45deg, #f3ec78, #af4261);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+`;
